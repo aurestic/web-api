@@ -73,22 +73,25 @@ class EndpointMixin(models.AbstractModel):
             )
         )
 
-    def _endpoint_cache_gc_domain(self, cache_name):
+    @api.model
+    def _endpoint_cache_gc_domain(self):
         now = fields.Datetime.now()
         gc_from = date_utils.subtract(now, days=30)
         return [
             ("name", "like", "endpoint_cache%"),
             ("res_model", "=", self._name),
-            ("res_id", "=", self.id),
             ("create_date", "<=", gc_from),
         ]
 
     @api.autovacuum
     def _endpoint_cache_gc(self):
         """Garbage collector for old caches"""
-        self.env["ir.attachment"].sudo().search(
-            self._endpoint_cache_gc_domain(self._name)
-        ).unlink()
+        domain = self._endpoint_cache_gc_domain()
+        self._endpoint_cache_wipe(domain)
+
+    def _endpoint_cache_wipe(self, domain):
+        """Wipe cache attachments based on domain"""
+        self.env["ir.attachment"].sudo().search(domain).unlink()
 
     def action_view_cache_attachments(self):
         """Action to view cache attachments"""
