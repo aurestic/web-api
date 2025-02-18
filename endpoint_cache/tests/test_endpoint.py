@@ -89,3 +89,12 @@ class TestEndpoint(CommonEndpoint):
                 ("res_id", "=", self.endpoint1.id),
             ],
         )
+
+    def test_action_purge_cache_attachments(self):
+        self.endpoint1._endpoint_cache_store("endpoint_cache.test", b"test")
+        self.endpoint1._endpoint_cache_store("endpoint_cache.test2", b"test2")
+        self.endpoint2._endpoint_cache_store("endpoint_cache.test3", b"test3")
+        self.endpoint1.action_purge_cache_attachments()
+        self.assertFalse(self.endpoint1._endpoint_cache_get("endpoint_cache.test"))
+        self.assertFalse(self.endpoint1._endpoint_cache_get("endpoint_cache.test2"))
+        self.assertTrue(self.endpoint2._endpoint_cache_get("endpoint_cache.test3"))

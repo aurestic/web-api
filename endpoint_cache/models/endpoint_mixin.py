@@ -2,10 +2,14 @@
 # @author: Simone Orsi <simone.orsi@camptocamp.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import logging
+
 from odoo import _, api, exceptions, fields, models
 from odoo.tools import date_utils
 
 from odoo.addons.http_routing.models.ir_http import slugify_one
+
+_logger = logging.getLogger(__name__)
 
 
 class EndpointMixin(models.AbstractModel):
@@ -92,6 +96,7 @@ class EndpointMixin(models.AbstractModel):
     def _endpoint_cache_wipe(self, domain):
         """Wipe cache attachments based on domain"""
         self.env["ir.attachment"].sudo().search(domain).unlink()
+        _logger.debug("_endpoint_cache_wipe wiped domain=%s", domain)
 
     def action_view_cache_attachments(self):
         """Action to view cache attachments"""
@@ -106,3 +111,9 @@ class EndpointMixin(models.AbstractModel):
             ("res_model", "=", self._name),
             ("res_id", "=", self.id),
         ]
+
+    def action_purge_cache_attachments(self):
+        """Action to purge cache attachments"""
+        domain = self._endpoint_view_cache_domain()
+        self._endpoint_cache_wipe(domain)
+        return {"type": "ir.actions.act_window_close"}
