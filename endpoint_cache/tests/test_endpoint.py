@@ -78,3 +78,14 @@ class TestEndpoint(CommonEndpoint):
             self.assertFalse(cache1.exists())
             self.assertFalse(cache2.exists())
             self.assertTrue(cache3.exists())
+
+    def test_action_view_cache_attachments(self):
+        action = self.endpoint1.action_view_cache_attachments()
+        self.assertEqual(
+            action["domain"],
+            [
+                ("name", "like", "endpoint_cache%"),
+                ("res_model", "=", "endpoint.endpoint"),
+                ("res_id", "=", self.endpoint1.id),
+            ],
+        )
