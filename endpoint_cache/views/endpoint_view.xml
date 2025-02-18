@@ -17,6 +17,12 @@
                             string="View caches"
                             type="object"
                         />
+                <button
+                            class="oe_inline"
+                            name="action_purge_cache_attachments"
+                            string="Purge caches"
+                            type="object"
+                        />
               </group>
               <hr string="Cache usage example" />
               <pre>
