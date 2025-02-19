@@ -25,7 +25,6 @@ class EndpointMixin(models.AbstractModel):
         ],
         default="day",
     )
-    # cache_preheat = fields.Boolean()  # TODO
 
     def _endpoint_cache_make_name(self, ext, suffix=None):
         parts = [
