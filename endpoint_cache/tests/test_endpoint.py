@@ -118,13 +118,13 @@ class TestEndpoint(CommonEndpoint):
             result = dict(response=resp)
             """
         )
-        domain = self.endpoint1._endpoint_view_cache_domain()
-        cache_atts = self.env["ir.attachment"].search(domain)
-        self.assertFalse(cache_atts)
+        self.assertEqual(self.endpoint1.cache_att_count, 0)
         with MockRequest(self.env):
             self.endpoint1.action_preheat_cache()
+        self.endpoint1.invalidate_cache(["cache_att_count"])
+        self.assertEqual(self.endpoint1.cache_att_count, 1)
+        domain = self.endpoint1._endpoint_view_cache_domain()
         cache_atts = self.env["ir.attachment"].search(domain)
-        self.assertEqual(len(cache_atts), 1)
         self.assertEqual(cache_atts.mimetype, "application/json")
         self.assertEqual(
             json.loads(base64.decodebytes(cache_atts.datas)), {"foo": "bar"}
