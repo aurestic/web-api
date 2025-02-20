@@ -25,6 +25,19 @@ class EndpointMixin(models.AbstractModel):
         ],
         default="day",
     )
+    cache_att_count = fields.Integer(
+        compute="_compute_cache_att_count", string="Cache count"
+    )
+
+    def _compute_cache_att_count(self):
+        domain = [
+            ("name", "like", "endpoint_cache%"),
+            ("res_model", "=", self._name),
+        ]
+        data = self.env["ir.attachment"].read_group(domain, ["res_id"], ["res_id"])
+        mapped_data = {m["res_id"]: m["res_id_count"] for m in data}
+        for rec in self:
+            rec.cache_att_count = mapped_data.get(rec.id, 0)
 
     def _endpoint_cache_make_name(self, ext, suffix=None):
         parts = [
