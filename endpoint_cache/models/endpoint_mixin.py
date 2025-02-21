@@ -93,7 +93,7 @@ class EndpointMixin(models.AbstractModel):
     @api.model
     def _endpoint_cache_gc_domain(self):
         now = fields.Datetime.now()
-        gc_from = date_utils.subtract(now, days=30)
+        gc_from = date_utils.subtract(now, days=32)
         return [
             ("name", "like", "endpoint_cache%"),
             ("res_model", "=", self._name),
