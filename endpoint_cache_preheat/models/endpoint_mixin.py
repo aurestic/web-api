@@ -19,7 +19,7 @@ class EndpointMixin(models.AbstractModel):
         "according to the selected policy. "
         "Cache generation will be done in a queue job.",
     )
-    cache_preheat_ts = fields.Datetime(readonly=True)
+    cache_preheat_ts = fields.Datetime(readonly=True, string="Last pre-heat on")
 
     @api.model
     def cron_endpoint_cache_preheat(self):
