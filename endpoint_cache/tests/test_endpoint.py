@@ -63,22 +63,30 @@ class TestEndpoint(CommonEndpoint):
                     "create_date": dt2,
                 }
             )
-        dt2 = "2024-07-20 00:00:00"
-        with freeze_time(dt2):
+        dt3 = "2024-07-20 00:00:00"
+        with freeze_time(dt3):
             cache3 = self.endpoint1._endpoint_cache_store(
                 "endpoint_cache.test3", b"test3"
             )
             cache3._write(
                 {
-                    "create_date": dt2,
+                    "create_date": dt3,
                 }
             )
+        # 30 days after the 1st cache
         with freeze_time("2024-08-01 00:00:00"):
+            self.endpoint1._endpoint_cache_gc()
+            self.assertTrue(cache1.exists())
+            self.assertTrue(cache2.exists())
+            self.assertTrue(cache3.exists())
+        # 32 days after the 1st cache
+        with freeze_time("2024-08-02 00:00:00"):
             self.endpoint1._endpoint_cache_gc()
             self.assertFalse(cache1.exists())
             self.assertTrue(cache2.exists())
             self.assertTrue(cache3.exists())
-        with freeze_time("2024-08-12 00:00:00"):
+        # 32 days after the 2nd cache
+        with freeze_time("2024-08-11 00:00:00"):
             self.endpoint1._endpoint_cache_gc()
             self.assertFalse(cache1.exists())
             self.assertFalse(cache2.exists())
