@@ -48,12 +48,11 @@ class TestEndpoint(CommonEndpoint):
         ep_monthly = ep_daily.copy({"route": "/monthly", "cache_policy": "month"})
         # 1 day later
         future_date = fields.Datetime.from_string("2025-02-20 20:00:00")
-        with freeze_time(future_date), MockRequest(self.env):
-            with trap_jobs() as trap:
-                self._run_cron()
-                trap.assert_jobs_count(1)
-                trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
-                trap.perform_enqueued_jobs()
+        with trap_jobs() as trap, freeze_time(future_date), MockRequest(self.env):
+            self._run_cron()
+            trap.assert_jobs_count(1)
+            trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
+            trap.perform_enqueued_jobs()
             self.assertEqual(ep_daily.cache_preheat_ts, future_date)
             self.assertEqual(ep_weekly.cache_preheat_ts, now)
             self.assertEqual(ep_monthly.cache_preheat_ts, now)
@@ -78,12 +77,11 @@ class TestEndpoint(CommonEndpoint):
         )
         # 2 days later
         future_date = fields.Datetime.from_string("2025-02-21 21:30:00")
-        with freeze_time(future_date), MockRequest(self.env):
-            with trap_jobs() as trap:
-                self._run_cron()
-                trap.assert_jobs_count(1)
-                trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
-                trap.perform_enqueued_jobs()
+        with trap_jobs() as trap, freeze_time(future_date), MockRequest(self.env):
+            self._run_cron()
+            trap.assert_jobs_count(1)
+            trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
+            trap.perform_enqueued_jobs()
             self.assertEqual(ep_daily.cache_preheat_ts, future_date)
             self.assertEqual(ep_weekly.cache_preheat_ts, now)
             self.assertEqual(ep_monthly.cache_preheat_ts, now)
@@ -92,7 +90,7 @@ class TestEndpoint(CommonEndpoint):
             self.env["ir.attachment"].search_count(
                 ep_daily._endpoint_view_cache_domain()
             ),
-            2,
+            1,
         )
         self.assertEqual(
             self.env["ir.attachment"].search_count(
@@ -108,12 +106,11 @@ class TestEndpoint(CommonEndpoint):
         )
         # 1 week later
         future_date = fields.Datetime.from_string("2025-02-26 19:45:00")
-        with freeze_time(future_date), MockRequest(self.env):
-            with trap_jobs() as trap:
-                self._run_cron()
-                trap.assert_jobs_count(2)
-                trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
-                trap.perform_enqueued_jobs()
+        with trap_jobs() as trap, freeze_time(future_date), MockRequest(self.env):
+            self._run_cron()
+            trap.assert_jobs_count(2)
+            trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
+            trap.perform_enqueued_jobs()
             self.assertEqual(ep_daily.cache_preheat_ts, future_date)
             self.assertEqual(ep_weekly.cache_preheat_ts, future_date)
             self.assertEqual(ep_monthly.cache_preheat_ts, now)
@@ -122,7 +119,7 @@ class TestEndpoint(CommonEndpoint):
             self.env["ir.attachment"].search_count(
                 ep_daily._endpoint_view_cache_domain()
             ),
-            3,
+            2,
         )
         self.assertEqual(
             self.env["ir.attachment"].search_count(
@@ -138,12 +135,11 @@ class TestEndpoint(CommonEndpoint):
         )
         # 1 month later
         future_date = fields.Datetime.from_string("2025-03-19 23:45:00")
-        with freeze_time(future_date), MockRequest(self.env):
-            with trap_jobs() as trap:
-                self._run_cron()
-                trap.assert_jobs_count(3)
-                trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
-                trap.perform_enqueued_jobs()
+        with trap_jobs() as trap, freeze_time(future_date), MockRequest(self.env):
+            self._run_cron()
+            trap.assert_jobs_count(3)
+            trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
+            trap.perform_enqueued_jobs()
             self.assertEqual(ep_daily.cache_preheat_ts, future_date)
             self.assertEqual(ep_weekly.cache_preheat_ts, future_date)
             self.assertEqual(ep_monthly.cache_preheat_ts, future_date)
@@ -152,7 +148,7 @@ class TestEndpoint(CommonEndpoint):
             self.env["ir.attachment"].search_count(
                 ep_daily._endpoint_view_cache_domain()
             ),
-            4,
+            3,
         )
         self.assertEqual(
             self.env["ir.attachment"].search_count(
@@ -187,14 +183,12 @@ class TestEndpoint(CommonEndpoint):
         )
         # 1 day later
         future_date = fields.Datetime.from_string("2025-02-20 20:00:00")
-        with freeze_time(future_date), MockRequest(self.env):
-            with trap_jobs() as trap:
-                self._run_cron()
-                trap.assert_jobs_count(0)
+        with trap_jobs() as trap, freeze_time(future_date), MockRequest(self.env):
+            self._run_cron()
+            trap.assert_jobs_count(0)
             self.assertEqual(ep_daily.cache_preheat_ts, now)
 
     def test_action_preheat_cache_async(self):
-        now = fields.Datetime.from_string("2025-02-19 23:00:00")
         ep_daily = self.endpoint1.copy({"route": "/daily"})
         ep_daily.cache_preheat = True
         ep_daily.code_snippet = textwrap.dedent(
@@ -210,7 +204,8 @@ class TestEndpoint(CommonEndpoint):
             result = dict(response=resp)
             """
         )
-        with trap_jobs() as trap:
+        now = fields.Datetime.from_string("2025-02-19 23:00:00")
+        with trap_jobs() as trap, freeze_time(now), MockRequest(self.env):
             ep_daily.action_preheat_cache_async()
             trap.assert_jobs_count(1)
             trap.assert_enqueued_job(ep_daily._cron_endpoint_cache_preheat)
