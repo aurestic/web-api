@@ -18,13 +18,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:endpoint_cache.endpoint_mixin_form_view
 msgid ""
 "# get the name of the cache\n"
-"cache_name = endpoint._endpoint_make_cache_name(\"json\")\n"
+"cache_name = endpoint._endpoint_cache_make_name(\"json\")\n"
 "# check if the cache exists\n"
 "cached = endpoint._endpoint_cache_get(cache_name)\n"
 "if cached:\n"
 "    result = cached\n"
 "else:\n"
-"    result = json.dumps(env[\"my.model\"]._get_a_very_expensive_computed_result())\n"
+"    result = json.dumps(env[\"my.model\"]."
+"_get_a_very_expensive_computed_result())\n"
 "    # cache does not exist, create it0\n"
 "    endpoint._endpoint_cache_store(cache_name, result)\n"
 "resp = Response(result, content_type=\"application/json\", status=200)\n"
@@ -40,6 +41,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:endpoint_cache.field_endpoint_endpoint__cache_policy
 #: model:ir.model.fields,field_description:endpoint_cache.field_endpoint_mixin__cache_policy
 msgid "Cache Policy"
+msgstr ""
+
+#. module: endpoint_cache
+#: model:ir.model.fields,field_description:endpoint_cache.field_endpoint_endpoint__cache_att_count
+#: model:ir.model.fields,field_description:endpoint_cache.field_endpoint_mixin__cache_att_count
+msgid "Cache count"
 msgstr ""
 
 #. module: endpoint_cache
@@ -93,7 +100,24 @@ msgstr ""
 
 #. module: endpoint_cache
 #: model_terms:ir.ui.view,arch_db:endpoint_cache.endpoint_mixin_form_view
+msgid "Pre-heat cache"
+msgstr ""
+
+#. module: endpoint_cache
+#: model_terms:ir.ui.view,arch_db:endpoint_cache.endpoint_mixin_form_view
+msgid "Purge caches"
+msgstr ""
+
+#. module: endpoint_cache
+#: model_terms:ir.ui.view,arch_db:endpoint_cache.endpoint_mixin_form_view
 msgid "View caches"
+msgstr ""
+
+#. module: endpoint_cache
+#: model_terms:ir.ui.view,arch_db:endpoint_cache.endpoint_mixin_form_view
+msgid ""
+"Warning: this might take too long to complete if the endpoint uses expensive "
+"computations."
 msgstr ""
 
 #. module: endpoint_cache
