@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-29 16:26+0000\n"
+"PO-Revision-Date: 2025-06-09 14:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -22,12 +22,14 @@ msgid ""
 "A job will be created to pre-heat the cache. You can check the status of the"
 " job in the Jobs menu."
 msgstr ""
+"Verrà creato un lavoro per preriscaldare la cache. Puoi controllare lo stato "
+"del lavoro nel menu Lavoro."
 
 #. module: endpoint_cache_preheat
 #: model:ir.model.fields,field_description:endpoint_cache_preheat.field_endpoint_endpoint__cache_preheat
 #: model:ir.model.fields,field_description:endpoint_cache_preheat.field_endpoint_mixin__cache_preheat
 msgid "Automatic cache pre-heat"
-msgstr ""
+msgstr "Preriscaldamento cache automatico"
 
 #. module: endpoint_cache_preheat
 #: model:ir.model.fields,field_description:endpoint_cache_preheat.field_endpoint_mixin__display_name
@@ -39,17 +41,17 @@ msgstr "Nome visualizzato"
 #: model:ir.cron,cron_name:endpoint_cache_preheat.cron_endpoint_cache_preheat
 #: model:ir.cron,name:endpoint_cache_preheat.cron_endpoint_cache_preheat
 msgid "Endpoint cache pre-heat"
-msgstr ""
+msgstr "Preriscaldamento cache endpoint"
 
 #. module: endpoint_cache_preheat
 #: model:ir.model,name:endpoint_cache_preheat.model_endpoint_mixin
 msgid "Endpoint mixin"
-msgstr ""
+msgstr "Mixin endpoint"
 
 #. module: endpoint_cache_preheat
 #: model_terms:ir.ui.view,arch_db:endpoint_cache_preheat.endpoint_mixin_form_view
 msgid "Force cache pre-heat (async)"
-msgstr ""
+msgstr "Forza preriscaldamento cache (asincrono)"
 
 #. module: endpoint_cache_preheat
 #: model:ir.model.fields,field_description:endpoint_cache_preheat.field_endpoint_mixin__id
@@ -63,6 +65,9 @@ msgid ""
 "If checked, cache will be pre-heated by a cron according to the selected "
 "policy. Cache generation will be done in a queue job."
 msgstr ""
+"Se selezionata, la cache verrà preriscaldata da un cron in conformità alla "
+"apolitica selezionata. La generazione della cache verrà eseguita in un "
+"lavoro in coda."
 
 #. module: endpoint_cache_preheat
 #: model:ir.model.fields,field_description:endpoint_cache_preheat.field_endpoint_mixin____last_update
@@ -73,4 +78,4 @@ msgstr "Ultima modifica il"
 #: model:ir.model.fields,field_description:endpoint_cache_preheat.field_endpoint_endpoint__cache_preheat_ts
 #: model:ir.model.fields,field_description:endpoint_cache_preheat.field_endpoint_mixin__cache_preheat_ts
 msgid "Last pre-heat on"
-msgstr ""
+msgstr "Ultimo preriscaldamento su"
