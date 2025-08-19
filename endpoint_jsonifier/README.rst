@@ -17,18 +17,19 @@ Endpoint JSONifier
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb--api-lightgray.png?logo=github
-    :target: https://github.com/OCA/web-api/tree/14.0/endpoint_jsonifier
+    :target: https://github.com/OCA/web-api/tree/18.0/endpoint_jsonifier
     :alt: OCA/web-api
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-api-14-0/web-api-14-0-endpoint_jsonifier
+    :target: https://translation.odoo-community.org/projects/web-api-18-0/web-api-18-0-endpoint_jsonifier
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web-api&target_branch=14.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web-api&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This addon allows configuring an exporter for endpoints to be used in code snippets.
+This addon allows configuring an exporter for endpoints to be used in
+code snippets.
 
 **Table of contents**
 
@@ -38,18 +39,18 @@ This addon allows configuring an exporter for endpoints to be used in code snipp
 Usage
 =====
 
-This module by itself contains no business logic, but its configuration can be used to
-manage endpoints' data export.
+This module by itself contains no business logic, but its configuration
+can be used to manage endpoints' data export.
 
 For example:
 
-.. code-block:: python
+.. code:: python
 
-    parser = endpoint.export_id.get_json_parser()
-    prod_domain = [("sale_ok", "=", True)]
-    prod_data = env["product.product"].search(prod_domain).jsonify(parser)
-    resp = Response(json.dumps(prod_data), content_type="application/json", status=200)
-    result = dict(response=resp)
+   parser = endpoint.export_id.get_json_parser()
+   prod_domain = [("sale_ok", "=", True)]
+   prod_data = env["product.product"].search(prod_domain).jsonify(parser)
+   resp = Response(json.dumps(prod_data), content_type="application/json", status=200)
+   result = dict(response=resp)
 
 Bug Tracker
 ===========
@@ -57,7 +58,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web-api/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web-api/issues/new?body=module:%20endpoint_jsonifier%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web-api/issues/new?body=module:%20endpoint_jsonifier%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -65,19 +66,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Camptocamp SA <https://camptocamp.com>`_:
+-  `Camptocamp SA <https://camptocamp.com>`__:
 
-  * Silvio Gregorini <silvio.gregorini@camptocamp.com>
+   -  Silvio Gregorini <silvio.gregorini@camptocamp.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -100,6 +101,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-SilvioC2C| |maintainer-simahawk| 
 
-This module is part of the `OCA/web-api <https://github.com/OCA/web-api/tree/14.0/endpoint_jsonifier>`_ project on GitHub.
+This module is part of the `OCA/web-api <https://github.com/OCA/web-api/tree/18.0/endpoint_jsonifier>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
