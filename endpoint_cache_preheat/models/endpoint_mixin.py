@@ -10,7 +10,6 @@ _logger = logging.getLogger(__name__)
 
 
 class EndpointMixin(models.AbstractModel):
-
     _inherit = "endpoint.mixin"
 
     cache_preheat = fields.Boolean(
