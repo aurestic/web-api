@@ -17,6 +17,7 @@ from odoo.addons.website.tools import MockRequest
 class TestEndpoint(CommonEndpoint):
     @classmethod
     def _setup_records(cls):
+        # pylint: disable=missing-return
         super()._setup_records()
         cls.endpoint1 = cls.env.ref("endpoint.endpoint_demo_1")
         cls.endpoint2 = cls.env.ref("endpoint.endpoint_demo_2")
@@ -129,7 +130,7 @@ class TestEndpoint(CommonEndpoint):
         self.assertEqual(self.endpoint1.cache_att_count, 0)
         with MockRequest(self.env):
             self.endpoint1.action_preheat_cache()
-        self.endpoint1.invalidate_cache(["cache_att_count"])
+        self.endpoint1.invalidate_recordset(["cache_att_count"])
         self.assertEqual(self.endpoint1.cache_att_count, 1)
         domain = self.endpoint1._endpoint_view_cache_domain()
         cache_atts = self.env["ir.attachment"].search(domain)

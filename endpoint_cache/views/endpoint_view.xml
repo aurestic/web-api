@@ -10,14 +10,13 @@
                 <page string="Cache">
                     <group>
                         <field name="cache_policy" />
-                        <field name="cache_att_count" invisible="1" />
                         <button
                             class="oe_inline"
                             name="action_view_cache_attachments"
                             string="View caches"
                             type="object"
                             colspan="2"
-                            attrs="{'invisible': [('cache_att_count', '=', 0)]}"
+                            invisible="cache_att_count == 0"
                         />
                         <button
                             class="oe_inline"
@@ -25,7 +24,7 @@
                             string="Purge caches"
                             type="object"
                             colspan="2"
-                            attrs="{'invisible': [('cache_att_count', '=', 0)]}"
+                            invisible="cache_att_count == 0"
                         />
                         <button
                             class="oe_inline"

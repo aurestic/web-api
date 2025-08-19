@@ -4,11 +4,9 @@
 
 import logging
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 from odoo.http import request
 from odoo.tools import date_utils
-
-from odoo.addons.http_routing.models.ir_http import slugify_one
 
 _logger = logging.getLogger(__name__)
 
@@ -41,7 +39,7 @@ class EndpointMixin(models.AbstractModel):
     def _endpoint_cache_make_name(self, ext, suffix=None):
         parts = [
             "endpoint_cache",
-            slugify_one(self.name).replace("-", "_"),
+            self.env["ir.http"]._slugify_one(self.name).replace("-", "_"),
         ]
         if suffix:
             parts.append(suffix)
@@ -73,7 +71,9 @@ class EndpointMixin(models.AbstractModel):
     def _endpoint_cache_store(self, name, raw_data, mimetype=None):
         self._logger.debug("_endpoint_cache_store store att=%s", name)
         if not name.startswith("endpoint_cache"):
-            raise exceptions.UserError(_("Cache name must start with 'endpoint_cache'"))
+            raise exceptions.UserError(
+                self.env._("Cache name must start with 'endpoint_cache'")
+            )
         return (
             self.env["ir.attachment"]
             .sudo()
@@ -114,7 +114,7 @@ class EndpointMixin(models.AbstractModel):
         """Action to view cache attachments"""
         action = self.env["ir.actions.actions"]._for_xml_id("base.action_attachment")
         action["domain"] = self._endpoint_view_cache_domain()
-        action["name"] = _("Cache results")
+        action["name"] = self.env._("Cache results")
         return action
 
     def _endpoint_view_cache_domain(self):
