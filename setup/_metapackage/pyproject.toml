@@ -1,9 +1,10 @@
 [project]
 name = "odoo-addons-oca-web-api"
-version = "18.0.20250609.0"
+version = "18.0.20250820.0"
 dependencies = [
     "odoo-addon-endpoint==18.0.*",
     "odoo-addon-endpoint_auth_api_key==18.0.*",
+    "odoo-addon-endpoint_jsonifier==18.0.*",
     "odoo-addon-endpoint_route_handler==18.0.*",
     "odoo-addon-webservice==18.0.*",
 ]
