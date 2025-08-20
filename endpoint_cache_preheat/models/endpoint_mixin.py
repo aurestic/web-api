@@ -56,6 +56,7 @@ class EndpointMixin(models.AbstractModel):
         self.cache_preheat_ts = fields.Datetime.now()
 
     def _endpoint_cache_wipe(self, domain):
+        # pylint: disable=missing-return
         super()._endpoint_cache_wipe(domain)
         self.cache_preheat_ts = False
 
